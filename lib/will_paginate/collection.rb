@@ -114,7 +114,11 @@ module WillPaginate
     end
 
     def total_entries=(number)
-      @total_entries = number.to_i
+      if number.class == ActiveSupport::OrderedHash
+        @total_entries = number.count
+      else
+        @total_entries = number.to_i
+      end
       @total_pages   = (@total_entries / per_page.to_f).ceil
     end
 
